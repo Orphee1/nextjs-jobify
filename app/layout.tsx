@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ClerkProvider } from '@clerk/nextjs'
 import {
   Archivo,
   Archivo_Black,
@@ -69,12 +70,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='fr'>
-      {/* <body className={playwrite.className}>{children}</body> */}
-      {/* <body className={syne.className}>{children}</body> */}
-      {/* <body className={lexend.className}>{children}</body> */}
-      <body className={ibm.className}>{children}</body>
-      {/* <body>{children}</body> */}
-    </html>
+    <ClerkProvider>
+      <html lang='fr'>
+        <body className={ibm.className}>
+          {/* <header className='flex justify-end items-center p-4 gap-4 h-16'>
+           
+          </header> */}
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

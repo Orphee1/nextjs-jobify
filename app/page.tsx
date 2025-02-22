@@ -3,14 +3,28 @@ import Logo from '@/assets/logo.svg'
 import LandingImg from '@/assets/main.svg'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 export default function Home() {
   return (
     <main
     // className='h-screen flex items-center justify-center'
     >
-      <header className='max-w-6xl mx-auto px-4 sm:px-8 py-6'>
+      <header className='max-w-6xl mx-auto px-4 sm:px-8 py-6 flex'>
         <Image src={Logo} alt='logo' />
+        <SignedOut>
+          <SignInButton />
+          <SignUpButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </header>
       <section className='max-w-6xl mx-auto px-4 sm:px-8 h-screen -mt-20 grid lg:grid-cols-[1fr,400px] items-center '>
         <div>
