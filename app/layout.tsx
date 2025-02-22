@@ -32,10 +32,12 @@ const ibm = IBM_Plex_Sans({
 // })
 
 // const krona = Krona_One({
+//   subsets: ['latin'],
 //   weight: '400',
 // })
 
 // const lexend = Lexend_Exa({
+//   subsets: ['latin'],
 //   weight: ['100', '500', '900'],
 // })
 
@@ -43,7 +45,9 @@ const ibm = IBM_Plex_Sans({
 //   subsets: ['latin'],
 //   weight: ['100', '200', '300', '400', '900'],
 // })
-// const playwrite = Playwrite_ZA({})
+// const playwrite = Playwrite_ZA({
+
+// })
 
 // const space = Space_Grotesk({
 //   weight: ['300', '400', '600', '700'],
@@ -53,11 +57,13 @@ const ibm = IBM_Plex_Sans({
 //   weight: ['400', '700'],
 // })
 
-// const syne = Syne_Mono({
+// const syne = Syne({
+//   subsets: ['latin'],
 //   weight: '400',
 // })
 
 import './globals.css'
+import ThemeProvider from './providers'
 
 export const metadata: Metadata = {
   title: 'Jobify',
@@ -71,12 +77,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang='fr'>
+      <html lang='fr' suppressHydrationWarning>
         <body className={ibm.className}>
-          {/* <header className='flex justify-end items-center p-4 gap-4 h-16'>
-           
-          </header> */}
-          {children}
+          <ThemeProvider>{children}</ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
