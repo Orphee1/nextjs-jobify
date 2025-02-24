@@ -1,5 +1,10 @@
 import React from 'react'
+import { CreateJobForm } from '@/components/components'
 
 export default function AddJobPage() {
-  return <h1 className='text-7xl'>Add Job Page</h1>
+  return (
+    <>
+      <CreateJobForm />
+    </>
+  )
 }
