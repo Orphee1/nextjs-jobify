@@ -1,66 +1,11 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import {
-  // Archivo,
-  // Archivo_Black,
-  // Inter,
-  // Playwrite_ZA,
-  // IBM_Plex_Mono,
-  IBM_Plex_Sans,
-  // Krona_One,
-  // Lexend_Exa,
-  // Space_Grotesk,
-  // Space_Mono,
-  // Syne,
-  // Syne_Mono,
-} from 'next/font/google'
-
-// const archivo = Archivo({
-//   weight: ['100', '400', '600', '900'],
-// })
-// const archivo_b = Archivo_Black({
-//   weight: '400',
-// })
+import { IBM_Plex_Sans } from 'next/font/google'
 
 const ibm = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: '400',
 })
-
-// const ibm_m = IBM_Plex_Mono({
-//   weight: '400',
-// })
-
-// const krona = Krona_One({
-//   subsets: ['latin'],
-//   weight: '400',
-// })
-
-// const lexend = Lexend_Exa({
-//   subsets: ['latin'],
-//   weight: ['100', '500', '900'],
-// })
-
-// const inter = Inter({
-//   subsets: ['latin'],
-//   weight: ['100', '200', '300', '400', '900'],
-// })
-// const playwrite = Playwrite_ZA({
-
-// })
-
-// const space = Space_Grotesk({
-//   weight: ['300', '400', '600', '700'],
-// })
-
-// const space_m = Space_Mono({
-//   weight: ['400', '700'],
-// })
-
-// const syne = Syne({
-//   subsets: ['latin'],
-//   weight: '400',
-// })
 
 import './globals.css'
 import ThemeProvider from './providers'
