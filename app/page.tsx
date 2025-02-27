@@ -13,10 +13,8 @@ import {
 
 export default function Home() {
   return (
-    <main
-    // className='h-screen flex items-center justify-center'
-    >
-      <header className='max-w-6xl mx-auto px-4 sm:px-8 py-6 flex'>
+    <main>
+      <header className='max-w-6xl mx-auto px-4 sm:px-8 py-3 flex'>
         <Image src={Logo} alt='logo' />
         <SignedOut>
           <SignInButton />
