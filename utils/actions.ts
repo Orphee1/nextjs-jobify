@@ -89,3 +89,61 @@ export async function getAllJobsAction({
     return { jobs: [], count: 0, page: 1, totalPages: 0 }
   }
 }
+
+export async function getSingleJobAction(id: string): Promise<JobType | null> {
+  let job: JobType | null = null
+  const userId = await authenticateRedirect()
+  try {
+    job = await prisma.job.findUnique({
+      where: {
+        id: id,
+        clerkId: userId,
+      },
+    })
+  } catch (error) {
+    console.log(error)
+    job = null
+  }
+  if (!job) {
+    redirect('/jobs')
+  }
+  return job
+}
+
+export async function deleteJobAction(id: string): Promise<JobType | null> {
+  const userId = await authenticateRedirect()
+  try {
+    const job: JobType = await prisma.job.delete({
+      where: {
+        id: id,
+        clerkId: userId,
+      },
+    })
+
+    return job
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function updateJobAction(
+  id: string,
+  values: CreateAndEditJobType
+): Promise<JobType | null> {
+  const userId = await authenticateRedirect()
+  try {
+    const job = await prisma.job.update({
+      where: {
+        id,
+        clerkId: userId,
+      },
+      data: {
+        ...values,
+      },
+    })
+    return job
+  } catch (error) {
+    return null
+  }
+}

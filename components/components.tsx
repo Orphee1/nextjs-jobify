@@ -1,6 +1,7 @@
 export { default as CreateJobForm } from './CreateJobForm'
 export { CustomFormField, CustomFormSelect } from './FormComponent'
 export { default as DeleteJobBtn } from './DeleteJobBtn'
+export { default as EditForm } from './EditForm'
 export { default as JobCard } from './JobCard'
 export { default as JobInfo } from './JobInfo'
 export { default as JobsList } from './JobsList'
