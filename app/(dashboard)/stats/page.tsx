@@ -21,8 +21,8 @@ export default async function StatsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ChartContainer />
       <StatsContainer />
+      <ChartContainer />
     </HydrationBoundary>
   )
 }

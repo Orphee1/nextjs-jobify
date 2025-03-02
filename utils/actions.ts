@@ -52,6 +52,7 @@ export async function getAllJobsAction({
   totalPages: number
 }> {
   const userId = await authenticateRedirect()
+
   try {
     let whereClause: Prisma.JobWhereInput = {
       clerkId: userId,
@@ -79,13 +80,23 @@ export async function getAllJobsAction({
         status: jobStatus,
       }
     }
+
+    const skip = (page - 1) * limit
+
     const jobs: JobType[] = await prisma.job.findMany({
       where: whereClause,
+      skip,
+      take: limit,
       orderBy: {
         createdAt: 'desc',
       },
     })
-    return { jobs, count: 0, page: 1, totalPages: 0 }
+
+    const count: number = await prisma.job.count({
+      where: whereClause,
+    })
+    const totalPages = Math.ceil(count / limit)
+    return { jobs, count, page, totalPages }
   } catch (error) {
     console.log(error)
     return { jobs: [], count: 0, page: 1, totalPages: 0 }
@@ -190,7 +201,6 @@ export async function getChartDataAction(): Promise<
   Array<{ date: string; count: number }>
 > {
   const userId = await authenticateRedirect()
-  const sixMonthsAgo = dayjs().subtract(6, 'month').toDate()
   const twoYearsAgo = dayjs().subtract(2, 'year').toDate()
 
   try {
@@ -198,7 +208,6 @@ export async function getChartDataAction(): Promise<
       where: {
         clerkId: userId,
         createdAt: {
-          // gte: sixMonthsAgo,
           gte: twoYearsAgo,
         },
       },
