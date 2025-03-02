@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma": {
+      "seed": "ts-node prisma/daya.json"
+    }
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",

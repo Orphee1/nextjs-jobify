@@ -5,9 +5,11 @@ import { auth } from '@clerk/nextjs/server'
 import { JobType, CreateAndEditJobType, createAndEditJobSchema } from './types'
 import { redirect } from 'next/navigation'
 import { Prisma } from '@prisma/client'
+import dayjs from 'dayjs'
 
 async function authenticateRedirect(): Promise<string> {
   const { userId } = await auth()
+
   if (!userId) redirect('/')
   return userId
 }
@@ -145,5 +147,81 @@ export async function updateJobAction(
     return job
   } catch (error) {
     return null
+  }
+}
+
+export async function getStatsAction(): Promise<{
+  pending: number
+  interview: number
+  declined: number
+}> {
+  const userId = await authenticateRedirect()
+  try {
+    const stats = await prisma.job.groupBy({
+      where: {
+        clerkId: userId,
+      },
+      by: ['status'],
+      _count: {
+        status: true,
+      },
+    })
+    // console.log(stats)
+    const statsObject = stats.reduce(
+      (acc, curr) => {
+        acc[curr.status] = curr._count.status
+        return acc
+      },
+      {} as Record<string, number>
+    )
+    const defaultStats = {
+      pending: 0,
+      interview: 0,
+      declined: 0,
+      ...statsObject,
+    }
+    return defaultStats
+  } catch (error) {
+    redirect('/jobs')
+  }
+}
+
+export async function getChartDataAction(): Promise<
+  Array<{ date: string; count: number }>
+> {
+  const userId = await authenticateRedirect()
+  const sixMonthsAgo = dayjs().subtract(6, 'month').toDate()
+  const twoYearsAgo = dayjs().subtract(2, 'year').toDate()
+
+  try {
+    const jobs = await prisma.job.findMany({
+      where: {
+        clerkId: userId,
+        createdAt: {
+          // gte: sixMonthsAgo,
+          gte: twoYearsAgo,
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+    // console.log(jobs)
+    let applicationPerJobs = jobs.reduce(
+      (acc, job) => {
+        const date = dayjs(job.createdAt).format('MMM YY')
+        const existingEntry = acc.find((entry) => entry.date === date)
+        if (existingEntry) {
+          existingEntry.count += 1
+        } else {
+          acc.push({ date, count: 1 })
+        }
+        return acc
+      },
+      [] as Array<{ date: string; count: number }>
+    )
+    return applicationPerJobs
+  } catch (error) {
+    redirect('/jobs')
   }
 }

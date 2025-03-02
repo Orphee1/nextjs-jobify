@@ -15,8 +15,10 @@ const eslintConfig = [
     rules: {
       'no-unused-vars': 'off',
       'prefer-const': 'off',
+      'no-require-imports': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/prefer-const': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ]
